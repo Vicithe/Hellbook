@@ -2,25 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DepressionMeter : MonoBehaviour
 {
-    private int depression;
+    public int depression_plus_correctoffset;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Find("Canvas/Blackscreen").GetComponent<Image>().color = new Color(0, 0, 0, 0);
-        depression = 0;
+    }
+
+    private void Update()
+    {
+        if(depression_plus_correctoffset <= 0)
+        {
+            SceneManager.LoadScene("LoseScene");
+            print("You Lose");
+        }
     }
 
     void OnMouseDown()
     {
-        if (!GameObject.FindWithTag("correctanswer"))
-        {
-            depression++;
-        }
+        // if (!GameObject.FindWithTag("correctanswer"))
+        depression_plus_correctoffset--;
+            print(depression_plus_correctoffset + "depressed");
 
-        GameObject.Find("Canvas/BlackScreen").GetComponent<Image>().color = new Color(0, 0, 0, (255 / 10 * depression));
+     //   this.GetComponent<SpriteRenderer>().material.color = new Color(0, 0, 0, (255 - (255/10 * depression)));
     }
 }
